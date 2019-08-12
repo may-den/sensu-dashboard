@@ -3,12 +3,13 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $client = new GuzzleHttp\Client();
 
-$request = new GuzzleHttp\Psr7\Request('GET', 'http://127.0.0.1:4567/results');
-$response = $client->send($request, ['timeout' => 2]);
+//$request = new GuzzleHttp\Psr7\Request('GET', 'http://127.0.0.1:4567/results');
+//$response = $client->send($request, ['timeout' => 2]);
 
-$handler = fopen(__DIR__ . '/../test.json', 'a+');
-fwrite($handler, $response->getBody()->getContents());
-$body = json_decode($response->getBody()->getContents(), 1);
+$handler = fopen(__DIR__ . '/../test.json', 'r+');
+$contents = fread($handler, filesize(__DIR__ . '/../test.json'));
+
+$body = json_decode($contents, 1);
 
 foreach ($body as $check) {
   $dateTime = new DateTime();
@@ -17,4 +18,4 @@ foreach ($body as $check) {
   echo "<br />";
 }
 
-var_export($response->getBody()->getContents());
+//var_export($response->getBody()->getContents());
