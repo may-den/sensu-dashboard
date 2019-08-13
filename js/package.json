@@ -1,0 +1,29 @@
+{
+  "name": "release-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "test"
+  },
+  "author": "dbould",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-react": "^7.0.0",
+    "axios": "^0.18.0",
+    "babel-loader": "^8.0.4",
+    "path": "^0.12.7",
+    "prop-types": "^15.7.1",
+    "react": "^16.7.0",
+    "react-axios": "^2.0.3",
+    "react-dom": "^16.7.0"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}
