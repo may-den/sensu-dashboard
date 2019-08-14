@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Slim 3</title>
+    <title>Sensor Dashboard</title>
     <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
     <style>
         body {
@@ -21,6 +21,107 @@
             font-weight: 200;
             margin-bottom: 0;
         }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 3fr 1fr 3fr;
+
+            align-items: center;
+        }
+
+        .nameHeading {
+            font-weight:bold;
+            color:black;
+
+            justify-self: center;
+
+            grid-column-start: 1;
+            grid-column-end: 1;
+
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+
+        .statusHeading {
+            font-weight:bold;
+            color:black;
+
+            justify-self: center;
+
+            grid-column-start: 2;
+            grid-column-end: 2;
+
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+
+        .timeHeading {
+            font-weight:bold;
+            color:black;
+
+            justify-self: center;
+
+            grid-column-start: 3;
+            grid-column-end: 3;
+
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+
+        .statusItemGreenNameItem {
+            background-color: greenyellow;
+            justify-self: center;
+
+            grid-column-start: 1;
+            grid-column-end: 1;
+
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
+        .statusItemRedNameItem {
+            background-color: red;
+            justify-self: center;
+
+            grid-column-start: 1;
+            grid-column-end: 1;
+
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
+        .statusItemGreen {
+            justify-self: center;
+
+            background-color:greenyellow;
+            grid-column-start: 2;
+            grid-column-end: 2;
+
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
+        .statusItemRed {
+            justify-self: center;
+
+            background-color: red;
+            grid-column-start: 2;
+            grid-column-end: 2;
+
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
+        .timeItem {
+            justify-self: center;
+
+            grid-column-start: 3;
+            grid-column-end: 3;
+
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
     </style>
 </head>
 <body>
@@ -30,8 +131,8 @@
     foreach ($body as $check) {
         $dateTime = new DateTime();
         $dateTime->setTimestamp($check['check']['executed']);
-        echo "Name: " . $check["check"]["name"] . " Status: " . $check['check']["status"] . " Run at: " . $dateTime->format("d/m/Y H:i:s");
-        echo "<br />";
+        //echo "Name: " . $check["check"]["name"] . " Status: " . $check['check']["status"] . " Run at: " . $dateTime->format("d/m/Y H:i:s");
+        //echo "<br />";
     }
 
     ?>
