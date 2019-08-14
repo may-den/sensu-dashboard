@@ -1,0 +1,3 @@
+{
+    "sensu-config-directory": "/etc/sensu/conf.d"
+}

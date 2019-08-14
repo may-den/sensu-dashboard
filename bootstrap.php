@@ -18,3 +18,12 @@ $middleware($app);
 // Register routes
 $routes = require __DIR__ . '/src/routes.php';
 $routes($app);
+
+// Register Config
+if (file_exists('davework.json')) {
+    $configJson = file_get_contents('davework.json');
+} else {
+    die("Couldn't find davework.json\n");
+}
+
+$container['config'] = json_decode($configJson);
