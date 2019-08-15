@@ -4,7 +4,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use SensuDashboard\Controller\CheckResultsController;
-use SensuDashboard\Factory\CheckResultControllerFactory;
+use SensuDashboard\Factory\CheckResultsControllerFactory;
 use SensuDashboard\Factory\CheckResultsServiceFactory;
 use SensuDashboard\Service\CheckResultsService;
 use Slim\App;
@@ -40,6 +40,6 @@ return function (App $app) {
     $container['config'] = $config;
 
 
-    $container[CheckResultsController::class] = new CheckResultControllerFactory($container);
+    $container[CheckResultsController::class] = new CheckResultsControllerFactory($container);
     $container[CheckResultsService::class] = new CheckResultsServiceFactory($container);
 };
