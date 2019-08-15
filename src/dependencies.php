@@ -1,6 +1,7 @@
 <?php
 
 use SensuDashboard\Controller\CheckResultController;
+use SensuDashboard\Factory\CheckResultControllerFactory;
 use Slim\App;
 
 return function (App $app) {
@@ -18,5 +19,6 @@ return function (App $app) {
         $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
         return $logger;
     };
-    $container[CheckResultController::class] = new CheckResultController();
+
+    $container[CheckResultController::class] = new CheckResultControllerFactory($container);
 };

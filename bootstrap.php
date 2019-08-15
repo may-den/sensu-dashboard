@@ -20,10 +20,10 @@ $routes = require __DIR__ . '/src/routes.php';
 $routes($app);
 
 // Register Config
-if (file_exists('davework.json')) {
-    $configJson = file_get_contents('davework.json');
+if (file_exists('config.json')) {
+    $configJson = file_get_contents('config.json');
 } else {
-    die("Couldn't find davework.json\n");
+    die("Couldn't find config.json\n");
 }
 
 $container['config'] = json_decode($configJson);
