@@ -7,6 +7,28 @@ export const App = () => {
 
     useEffect(() => {
         axios.get('http://sensu-dashboard.test/checkResult').then(res => {
+
+            res.data.sort(sortOnNameFunction);
+
+            function sortOnNameFunction(a, b) {
+                if (a.check.name === b.check.name) {
+                    return 0;
+                }
+                else {
+                    return (a.check.name< b.check.name) ? -1 : 1;
+                }
+            }
+
+            res.data.sort(sortOnStatusFunction);
+
+            function sortOnStatusFunction(a, b) {
+                if (a.check.status === b.check.status) {
+                    return 0;
+                }
+                else {
+                    return (a.check.status > b.check.status) ? -1 : 1;
+                }
+            }
             setData(res.data);
         }).catch(e=>{
             console.log(e);
