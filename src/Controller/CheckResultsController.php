@@ -5,18 +5,26 @@ namespace SensuDashboard\Controller;
 use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use SensuDashboard\Service\CheckResultService;
+use SensuDashboard\Service\CheckResultsService;
 
-class CheckResultController
+class CheckResultsController
 {
     /**
-     * @var CheckResultService
+     * @var CheckResultsService
      */
     private $checkResultService;
 
-    public function __construct(CheckResultService $checkResultService)
+    public function __construct(CheckResultsService $checkResultService)
     {
         $this->checkResultService = $checkResultService;
+    }
+
+    public function index(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    {
+        $body = json_decode($contents, 1);
+
+        // Render index view
+        return $container->get('renderer')->render($response, 'index.phtml', ['body' => $body]);
     }
 
     public function getCheckResults(ServerRequestInterface $request, ResponseInterface $response, array $args)

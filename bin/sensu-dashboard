@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../bootstrap.php';
 
 use SensuDashboard\Command\CheckSensorsLastRunCommand;
+use SensuDashboard\Service\CheckResultsService;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
