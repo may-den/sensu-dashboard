@@ -1,3 +1,4 @@
 {
-    "sensu-config-directory": "/etc/sensu/conf.d"
+    "sensu-config-directory": "/etc/sensu/conf.d",
+    "sensu-api-base-url": "http://127.0.0.1:4567/results"
 }
