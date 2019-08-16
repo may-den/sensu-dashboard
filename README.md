@@ -10,5 +10,5 @@ npm install
 ```
 
 ```
-cp setings.json.example settings.json
+cp config.json.example config.json
 ```
