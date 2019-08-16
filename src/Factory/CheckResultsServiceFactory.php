@@ -3,7 +3,7 @@
 namespace SensuDashboard\Factory;
 
 use Psr\Container\ContainerInterface;
-use SensuDashboard\Service\CheckResultsService;
+use SensuDashboard\Service\SensuApiService;
 
 class CheckResultsServiceFactory
 {
@@ -11,6 +11,6 @@ class CheckResultsServiceFactory
     {
         $sensuApiBaseUrl = $container->get('config')['sensu-api-base-url'];
 
-        return new CheckResultsService($sensuApiBaseUrl);
+        return new SensuApiService($sensuApiBaseUrl);
     }
 }
