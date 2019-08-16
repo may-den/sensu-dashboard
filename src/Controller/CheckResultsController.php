@@ -5,16 +5,16 @@ namespace SensuDashboard\Controller;
 use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use SensuDashboard\Service\CheckResultsService;
+use SensuDashboard\Service\SensuApiService;
 
 class CheckResultsController
 {
     /**
-     * @var CheckResultsService
+     * @var SensuApiService
      */
     private $checkResultService;
 
-    public function __construct(CheckResultsService $checkResultService)
+    public function __construct(SensuApiService $checkResultService)
     {
         $this->checkResultService = $checkResultService;
     }

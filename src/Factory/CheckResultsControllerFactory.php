@@ -4,13 +4,13 @@ namespace SensuDashboard\Factory;
 
 use Psr\Container\ContainerInterface;
 use SensuDashboard\Controller\CheckResultsController;
-use SensuDashboard\Service\CheckResultsService;
+use SensuDashboard\Service\SensuApiService;
 
 class CheckResultsControllerFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $service = $container->get(CheckResultsService::class);
+        $service = $container->get(SensuApiService::class);
 
         return new CheckResultsController($service);
     }
