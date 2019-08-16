@@ -2,3 +2,4 @@
 config.json
 js/node_modules
 vendor/
+public/assets/js/app.bundle.js

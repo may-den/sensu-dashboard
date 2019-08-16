@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Slim 3</title>
+    <title>Sensor Dashboard</title>
     <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
     <style>
         body {
@@ -21,6 +21,169 @@
             font-weight: 200;
             margin-bottom: 0;
         }
+
+        .grid-container {
+            display: grid;
+            align-items: center;
+            grid-template-columns: 0.7fr 1fr 0.2fr 0.2fr 0.5fr 2fr;
+        }
+
+        .serviceHeading {
+            font-weight:bold;
+            color:black;
+
+            justify-self: center;
+            padding-bottom: 1em;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+
+        .nameHeading {
+            font-weight:bold;
+            color:black;
+
+            justify-self: center;
+            padding-bottom: 1em;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+
+        .statusHeading {
+            font-weight:bold;
+            color:black;
+
+            justify-self: center;
+            padding-bottom: 1em;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+
+        .statusCodeHeading {
+            font-weight:bold;
+            color:black;
+
+            justify-self: center;
+            padding-bottom: 1em;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+
+        .timeHeading {
+            font-weight:bold;
+            color:black;
+
+            justify-self: center;
+            padding-bottom: 1em;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+
+        .messageHeading {
+            font-weight:bold;
+            color:black;
+
+            justify-self: center;
+            padding-bottom: 1em;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+
+            grid-row-start: 1;
+            grid-row-end: 1;
+        }
+
+        .serviceItem {
+            justify-self: center;
+
+            grid-column-start: 1;
+            grid-column-end: 1;
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
+        .nameItem {
+            justify-self: center;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
+        .statusItemGreenDot {
+            justify-self: center;
+
+            background-color: greenyellow;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+        .statusItemRedDot {
+            justify-self: center;
+
+            background-color: red;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
+        .statusCodeItem {
+            justify-self: center;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
+        .timeItem {
+            justify-self: center;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
+
+        .messageItem {
+            justify-self: center;
+            color: red;
+
+            grid-column-start: auto;
+            grid-column-end: auto;
+
+            grid-row-start: auto;
+            grid-row-end: auto;
+        }
     </style>
 </head>
 <body>
@@ -30,14 +193,14 @@
     foreach ($body as $check) {
         $dateTime = new DateTime();
         $dateTime->setTimestamp($check['check']['executed']);
-        echo "Name: " . $check["check"]["name"] . " Status: " . $check['check']["status"] . " Run at: " . $dateTime->format("d/m/Y H:i:s");
-        echo "<br />";
+        //echo "Name: " . $check["check"]["name"] . " Status: " . $check['check']["status"] . " Run at: " . $dateTime->format("d/m/Y H:i:s");
+        //echo "<br />";
     }
 
     ?>
 
     <div id="app"></div>
 
-    <script src="assets/js/app.bundle.js"></script>
+    <script src="/assets/js/app.bundle.js"></script>
 </body>
 </html>

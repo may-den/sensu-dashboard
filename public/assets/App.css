@@ -1,0 +1,21 @@
+.grid-container {
+    display: grid;
+    grid-column-gap: 50px;
+    grid-row-gap: 50px;
+}
+
+.item {
+    grid-column-start: 1;
+    grid-column-end: 1;
+
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.itemB {
+    grid-column-start: 5;
+    grid-column-end: 7;
+
+    grid-row-start: 7;
+    grid-row-end: 10;
+}

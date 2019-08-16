@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "test": "test",
+    "test": "jest",
     "watch": "webpack -w"
   },
   "author": "dbould",
@@ -22,6 +22,7 @@
     "react-dom": "^16.7.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.0.0",
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.28.1",
     "webpack-cli": "^3.1.2",
