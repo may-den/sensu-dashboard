@@ -7,6 +7,35 @@ const DisplaySensorStatus = ({data}) => {
         return <div/>
     }
 
+    function getService(name)
+    {
+        return (name.split(".", 2)).join(".");
+    }
+
+    function getName(datum)
+    {
+        return datum.check.name.replace("Mayden.Sensors.", "");
+    }
+
+    function getStatusColour(datum)
+    {
+        return datum.check.status === 0 ? "statusItemGreen" : "statusItemRed";
+    }
+
+    function getDateTime(datum)
+    {
+        let date = new Date(datum.check.executed * 1000);
+        let dateString = date.toLocaleDateString();
+        let time = date.getHours() + ':' + ("0" + date.getMinutes()).substr(-2) + ':' + ("0" + date.getSeconds()).substr(-2);
+
+        return time + " " + dateString;
+    }
+
+    function getMessage(datum)
+    {
+        return getStatusColour(datum) === "statusItemRed" ?  datum.check.output : "";
+    }
+
     return (
         <div>
             <div className="grid-container">
@@ -20,27 +49,15 @@ const DisplaySensorStatus = ({data}) => {
 
             {
                 data.map((datum, index) => {
-                    let date = new Date(datum.check.executed * 1000);
-                    let dateString = date.toLocaleDateString();
-                    let time = date.getHours() + ':' + ("0" + date.getMinutes()).substr(-2) + ':' + ("0" + date.getSeconds()).substr(-2);
-
-                    let statusColour = datum.check.status === 0 ? "statusItemGreen" : "statusItemRed";
-                    let printMessage = statusColour === "statusItemRed" ?  datum.check.output : "";
-
-                    let name = datum.check.name.replace("Mayden.Sensors.", "");
-
-                    // this is to split up the long sensor name
-                    let serviceName = (name.split(".", 2)).join(".");
-                    name = name.replace(serviceName + ".", "");
 
                     return (
                         <div className="grid-container" key={index}>
-                            <div className="serviceItem">{serviceName}</div>
-                            <div className="nameItem">{name}</div>
-                            <div className ={statusColour + "Dot"}/>
+                            <div className="serviceItem">{getService(getName(datum))}</div>
+                            <div className="nameItem">{getName(datum).replace(getService(getName(datum)) + ".", "")}</div>
+                            <div className ={getStatusColour(datum) + "Dot"}/>
                             <div className="statusCodeItem">({datum.check.status})</div>
-                            <div className="timeItem">{time + " " + dateString}</div>
-                            <div className="messageItem">{printMessage}</div>
+                            <div className="timeItem">{getDateTime(datum)}</div>
+                            <div className="messageItem">{getMessage(datum)}</div>
                         </div>
                     )
                 })
