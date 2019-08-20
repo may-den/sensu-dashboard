@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Display Component matches the snapshot 1`] = `
+<div>
+  <div
+    className="grid-container"
+  >
+    <div
+      className="serviceHeading"
+    >
+      Service
+    </div>
+    <div
+      className="nameHeading"
+    >
+      Name
+    </div>
+    <div
+      className="statusHeading"
+    >
+      Status
+    </div>
+    <div
+      className="statusCodeHeading"
+    >
+      (Code)
+    </div>
+    <div
+      className="timeHeading"
+    >
+      Time
+    </div>
+    <div
+      className="messageHeading"
+    >
+      Message
+    </div>
+  </div>
+  <div
+    className="grid-container"
+  >
+    <div
+      className="serviceItem"
+    >
+      Iaptus.Availabilities
+    </div>
+    <div
+      className="nameItem"
+    >
+      Metrics.AvailabilityCreatedCount
+    </div>
+    <div
+      className="statusItemGreenDot"
+    />
+    <div
+      className="statusCodeItem"
+    >
+      (
+      0
+      )
+    </div>
+    <div
+      className="timeItem"
+    >
+      8:50:13 7/22/2019
+    </div>
+    <div
+      className="messageItem"
+    >
+      
+    </div>
+  </div>
+  <div
+    className="grid-container"
+  >
+    <div
+      className="serviceItem"
+    >
+      Iaptus.Sms
+    </div>
+    <div
+      className="nameItem"
+    >
+      Checks.SendingOnTime
+    </div>
+    <div
+      className="statusItemRedDot"
+    />
+    <div
+      className="statusCodeItem"
+    >
+      (
+      2
+      )
+    </div>
+    <div
+      className="timeItem"
+    >
+      16:28:33 7/10/2019
+    </div>
+    <div
+      className="messageItem"
+    >
+      {"errors":[{"value":"1"},{"value":"16"}]}
+
+    </div>
+  </div>
+</div>
+`;
