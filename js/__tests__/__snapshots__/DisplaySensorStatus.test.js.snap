@@ -258,7 +258,7 @@ exports[`Display Component does not have status data 1`] = `
 </div>
 `;
 
-exports[`Display Component matches the snapshot 1`] = `
+exports[`Display Component matches the snapshot with all data 1`] = `
 <div>
   <div
     className="grid-container"
@@ -326,6 +326,40 @@ exports[`Display Component matches the snapshot 1`] = `
       className="messageItem"
     >
       
+    </div>
+  </div>
+  <div
+    className="grid-container"
+  >
+    <div
+      className="serviceItem"
+    >
+      keepalive
+    </div>
+    <div
+      className="nameItem"
+    >
+      keepalive
+    </div>
+    <div
+      className="statusItemRedDot"
+    />
+    <div
+      className="statusCodeItem"
+    >
+      (
+      2
+      )
+    </div>
+    <div
+      className="timeItem"
+    >
+      15:37:55 8/12/2019
+    </div>
+    <div
+      className="messageItem"
+    >
+      No keepalive sent from client for 1838727 seconds (&gt;=180)
     </div>
   </div>
 </div>

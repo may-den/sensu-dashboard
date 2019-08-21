@@ -24,7 +24,23 @@ const data =
             "output": "sensu.iaptus.bracknell.iaptusvnode14.availability_count.12_gloucester 1 1563781830\n...",
             "status": 0
         }
-    }]
+    },
+        {
+            "client": "sensu-client-ivnode7",
+            "check": {
+                "thresholds": {
+                    "warning": 120,
+                    "critical": 180
+                },
+                "name": "keepalive",
+                "issued": 1565620675,
+                "executed": 1565620675,
+                "output": "No keepalive sent from client for 1838727 seconds (>=180)",
+                "status": 2,
+                "type": "standard"
+            }
+        }
+    ]
 
 const noNameData = [
     {
@@ -93,7 +109,7 @@ const noExecutedData = [
 ]
 
 describe('Display Component', () => {
-    it('matches the snapshot', () => {
+    it('matches the snapshot with all data', () => {
         const tree = renderer
             .create(<DisplaySensorStatus data={data}/>)
             .toJSON()
