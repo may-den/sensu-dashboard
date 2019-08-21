@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import DisplaySensorStatus from "./display/DisplaySensorStatus";
 
-export const sortOnName = (a, b) => {
+function sortOnName(a, b){
     if (a.check.name === b.check.name) {
         return 0;
     }
@@ -11,7 +11,7 @@ export const sortOnName = (a, b) => {
     }
 }
 
-export const sortOnStatus = (a, b) => {
+function sortOnStatus(a, b) {
     if (a.check.status === b.check.status) {
         return 0;
     }
@@ -27,7 +27,6 @@ export const App = () => {
         axios.get('http://sensu-dashboard.test/checkResult').then(res => {
             res.data.sort(sortOnName);
             res.data.sort(sortOnStatus);
-
             setData(res.data);
         }).catch(e=>{
             console.log(e);

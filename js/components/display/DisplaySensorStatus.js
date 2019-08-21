@@ -2,7 +2,6 @@ import React from 'react'
 
 const DisplaySensorStatus = ({data}) => {
 
-    //needs changing to be async
     if (!data) {
         return <div/>
     }

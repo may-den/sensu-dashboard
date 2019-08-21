@@ -4,8 +4,8 @@ import DisplaySensorStatus from "../components/display/DisplaySensorStatus";
 
 const noData = []
 
-const data =
-    [{
+const data = [
+    {
         "client": "sensu-client-ivnode14",
         "check": {
             "type": "metric",
