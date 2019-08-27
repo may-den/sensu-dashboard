@@ -6,7 +6,9 @@ export const App = () => {
     const [data, setData] = useState("");
 
     useEffect(() => {
-        axios.get('http://sensu-dashboard.test/checkResult').then(res => {
+        var config = require('../../config');
+
+        axios.get(config["sensu-api-base-url"] + '/results').then(res => {
 
             res.data.sort(sortOnNameFunction);
 
