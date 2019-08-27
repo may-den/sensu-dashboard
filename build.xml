@@ -10,6 +10,9 @@
                     <copy file="config.json.example" tofile="config.json" />
                 </then>
         </if>
+
+        <exec command="composer install" />
+        <exec command="npm run build" dir="js/" />
     </target>
 
 </project>

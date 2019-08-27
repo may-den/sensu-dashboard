@@ -14,6 +14,12 @@ cp config.json.example config.json
 ```
 
 ## Build
+```
+phing build
+```
+
 ### Build JS
+```
 cd js/
 npm build
+```
