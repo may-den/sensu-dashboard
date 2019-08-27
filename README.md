@@ -22,5 +22,5 @@ phing build
 Runs under Phing build
 ```
 cd js/
-npm build
+npm run build
 ```
