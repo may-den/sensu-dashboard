@@ -18,7 +18,8 @@ cp config.json.example config.json
 phing build
 ```
 
-### Build JS
+### Build J
+Runs under Phing build
 ```
 cd js/
 npm build
