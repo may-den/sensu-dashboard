@@ -1,6 +1,8 @@
 <?php
 
-use SensuDashboard\Controller\CheckResultController;
+use SensuDashboard\Controller\CheckResultsController;
+use SensuDashboard\Controller\MockSensuClientsApiController;
+use SensuDashboard\Controller\MockSensuResultsApiController;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -9,20 +11,13 @@ return function (App $app) {
     $container = $app->getContainer();
 
     $app->get('/', function (Request $request, Response $response, array $args) use ($container) {
-        // Sample log message
-        $container->get('logger')->info("Slim-Skeleton '/' route");
-
-        //$request = new GuzzleHttp\Psr7\Request('GET', 'http://127.0.0.1:4567/results');
-        //$response = $client->send($request, ['timeout' => 2]);
-
         $handler = fopen(__DIR__ . '/../test.json', 'r+');
         $contents = fread($handler, filesize(__DIR__ . '/../test.json'));
 
-        $body = json_decode($contents, 1);
 
-        // Render index view
-        return $container->get('renderer')->render($response, 'index.phtml', ['body' => $body]);
     });
 
-    $app->get('/checkResult', CheckResultController::class . ':getCheckResults');
+    $app->get('/checkResults', CheckResultsController::class . ':getCheckResults');
+    $app->get('/mock-sensu-api/results', MockSensuResultsApiController::class . ':getCheckResults');
+    $app->get('/mock-sensu-api/clients', MockSensuClientsApiController::class . ':getClients');
 };

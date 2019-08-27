@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+require_once __DIR__ . '/../bootstrap.php';
+
+use SensuDashboard\Command\CheckSensorsLastRunCommand;
+use SensuDashboard\Service\SensuApiService;
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+
+$container = $app->getContainer();
+
+//Commands
+$application->add(
+            new CheckSensorsLastRunCommand(
+                $container->get('config')['sensu-config-directory'],
+                $container->get(SensuApiService::class),
+                $container->get('config')['slack-url'],
+                $container->get('config')['slack-channel']
+            ));
+
+$application->run();
