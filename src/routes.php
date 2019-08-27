@@ -11,10 +11,10 @@ return function (App $app) {
     $container = $app->getContainer();
 
     $app->get('/', function (Request $request, Response $response, array $args) use ($container) {
-        $handler = fopen(__DIR__ . '/../test.json', 'r+');
-        $contents = fread($handler, filesize(__DIR__ . '/../test.json'));
+        $body = $this->checkResultService->getCheckResults();
 
-
+        // Render index view
+        return $container->get('renderer')->render($response, 'index.phtml', ['body' => $body]);
     });
 
     $app->get('/checkResults', CheckResultsController::class . ':getCheckResults');
