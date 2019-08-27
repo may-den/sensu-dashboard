@@ -12,3 +12,8 @@ npm install
 ```
 cp config.json.example config.json
 ```
+
+## Build
+### Build JS
+cd js/
+npm build

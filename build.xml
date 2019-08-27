@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="iaptus" default="alert">
+
+    <target name="build">
+        <if>
+            <not>
+                <available file="config.json" type="file" />
+            </not>
+                <then>
+                    <copy file="config.json.example" tofile="config.json" />
+                </then>
+        </if>
+    </target>
+
+</project>
