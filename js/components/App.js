@@ -8,7 +8,7 @@ export const App = () => {
     useEffect(() => {
         var config = require('../../config');
 
-        axios.get(config["sensu-api-base-url"] + '/results').then(res => {
+        axios.get(config["base-url"] + '/checkResults').then(res => {
 
             res.data.sort(sortOnNameFunction);
 
