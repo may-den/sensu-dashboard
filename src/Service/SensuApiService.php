@@ -1,6 +1,7 @@
 <?php
 
 namespace SensuDashboard\Service;
+use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 
@@ -27,8 +28,34 @@ class SensuApiService
 
         $request = new Request('GET', $this->sensuApiBaseUrl . "/results");
         $response = $client->send($request, ['timeout' => 2]);
+        $results = json_decode($response->getBody()->getContents(), 1);
+        $filteredResults = $this->filterOldResults($results);
 
-        return json_decode($response->getBody()->getContents(), 1);
+        return $filteredResults;
+    }
+
+    /**
+     * Guessing results with an executed datetime over a month old are no longer switched on...
+     */
+    public function filterOldResults($results)
+    {
+        $filteredResults = [];
+
+        $now = new DateTime();
+
+        foreach ($results as $result) {
+            $lastRunTime = $result['check']['executed'];
+            $lastRun = new DateTime();
+            $lastRun->setTimestamp($lastRunTime);
+
+            $timeSinceLastRun = $now->getTimestamp() - $lastRun->getTimestamp();
+
+            if ($timeSinceLastRun < 2629800) {
+                $filteredResults[] = $result;
+            }
+        }
+
+        return $filteredResults;
     }
 
     /**
@@ -47,7 +74,6 @@ class SensuApiService
         $checks = [];
 
         foreach ($results as $check) {
-            //var_dump($check);die();
             $key = $check['check']['name'];
 
             $checks[$key] = $check;

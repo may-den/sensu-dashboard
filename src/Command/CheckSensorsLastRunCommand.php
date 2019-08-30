@@ -112,7 +112,6 @@ class CheckSensorsLastRunCommand extends Command
             $slackClient->attach([
                 'title' => "The following sensor hasn't run in a while:",
                 'text' => "",
-                //'mrkdwn_in' => ['text'],
                 'fields' => [
                     [
                         'title' => 'Sensor',
