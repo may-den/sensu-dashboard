@@ -64,12 +64,7 @@ class SensuApiService
      */
     public function getCheckResultsByCheck()
     {
-        $client = new Client();
-
-        $request = new Request('GET', $this->sensuApiBaseUrl . "/results");
-        $response = $client->send($request, ['timeout' => 2]);
-
-        $results = json_decode($response->getBody()->getContents(), 1);
+        $results = $this->getCheckResults();
 
         $checks = [];
 
