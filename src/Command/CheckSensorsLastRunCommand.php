@@ -86,7 +86,7 @@ class CheckSensorsLastRunCommand extends Command
             $timeSinceLastRun = $now->getTimestamp() - $lastRun->getTimestamp();
 
             if ($timeSinceLastRun > ($configuredInterval * 2)) {
-                $lateSensors[$lastRunResults[$key]['check']['name']] = date('d/m/Y H:i:s', $lastRunResults[$key]['check']['executed']);
+                $lateSensors[$key] = date('d/m/Y H:i:s', $lastRunResults[$key]['check']['executed']);
             }
         }
 
