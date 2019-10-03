@@ -76,6 +76,11 @@ class CheckSensorsLastRunCommand extends Command
 
             $configuredInterval = $config['checks'][$key]['interval'];
 
+            if (!isset($lastRunResults[$key])) {
+                // this hasn't run
+                continue;
+            }
+
             $lastRunTime = $lastRunResults[$key]['check']['executed'];
 
             $lastRun = new DateTime();
