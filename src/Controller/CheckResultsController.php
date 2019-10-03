@@ -34,4 +34,12 @@ class CheckResultsController
 
         return $response->withHeader('Content-type', 'application/vnd.api+json')->withBody($stream);
     }
+
+    public function getSensorsThatHaveNeverRun(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    {
+        $stream = new Stream(fopen('php://temp', 'r+'));
+        $stream->write(json_encode($this->checkResultService->getSensorsThatHaveNeverRun()));
+
+        return $response->withHeader('Content-type', 'application/vnd.api+json')->withBody($stream);
+    }
 }

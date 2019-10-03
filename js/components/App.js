@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import DisplaySensorStatus from "./display/DisplaySensorStatus";
+import DisplaySensorsThatHaveNeverRun from "./display/DisplaySensorsThatHaveNeverRun";
 
 export const App = () => {
     const [data, setData] = useState("");
+    const [newSensors, setNewSensors] = useState("");
 
     useEffect(() => {
         var config = require('../../config');
@@ -35,10 +37,17 @@ export const App = () => {
         }).catch(e=>{
             console.log(e);
         });
+
+        axios.get(config["base-url"] + '/newSensors').then(res => {
+            setNewSensors(res.data);
+        }).catch(e=>{
+            console.log(e);
+        });
     }, []);
 
     return (
         <div>
+            <DisplaySensorsThatHaveNeverRun data={newSensors} />
             <DisplaySensorStatus data={data} />
         </div>
     )

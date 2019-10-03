@@ -16,6 +16,7 @@ return function (App $app) {
     });
 
     $app->get('/checkResults', CheckResultsController::class . ':getCheckResults');
+    $app->get('/newSensors', CheckResultsController::class . ':getSensorsThatHaveNeverRun');
     $app->get('/mock-sensu-api/results', MockSensuResultsApiController::class . ':getCheckResults');
     $app->get('/mock-sensu-api/clients', MockSensuClientsApiController::class . ':getClients');
 };

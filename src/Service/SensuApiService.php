@@ -1,7 +1,9 @@
 <?php
 
 namespace SensuDashboard\Service;
+
 use DateTime;
+use DirectoryIterator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 
@@ -9,13 +11,17 @@ class SensuApiService
 {
     private $sensuApiBaseUrl;
 
+    private $sensuConfigDirectory;
+
     /**
      * SensuApiService constructor.
      * @param $sensuApiBaseUrl
+     * @param $sensuConfigDirectory
      */
-    public function __construct($sensuApiBaseUrl)
+    public function __construct($sensuApiBaseUrl, $sensuConfigDirectory)
     {
         $this->sensuApiBaseUrl = $sensuApiBaseUrl;
+        $this->sensuConfigDirectory = $sensuConfigDirectory;
     }
 
     /**
@@ -90,5 +96,46 @@ class SensuApiService
         $response = $client->send($request, ['timeout' => 2]);
 
         return $response->getBody()->getContents();
+    }
+
+    public function getSensorsThatHaveNeverRun()
+    {
+        $directoryIterator = new DirectoryIterator($this->sensuConfigDirectory);
+
+        $sensuConfig = [];
+
+        foreach ($directoryIterator as $file) {
+            if ($file->isDot()) {
+                continue;
+            }
+
+            $sensuConfig[] = json_decode(file_get_contents($file->getPathname()), 1);
+        }
+
+        $lastRunResults = $this->getCheckResults();
+
+        $sensorsThatHaveNeverRun = [];
+
+        foreach ($sensuConfig as $config) {
+            if (isset($config['client']) ||
+                isset($config['handlers']) ||
+                isset($config['relay']) ||
+                isset($config['rabbitmq'])
+                || is_null($config)) {
+                continue;
+            }
+
+            $key = key($config['checks']);
+
+            if (in_array($key, ['services', 'sms_queue'])) {
+                continue;
+            }
+
+            if (!isset($lastRunResults[$key])) {
+                $sensorsThatHaveNeverRun[] = $key;
+            }
+        }
+
+        return $sensorsThatHaveNeverRun;
     }
 }
