@@ -12,10 +12,7 @@ return function (App $app) {
     $container = $app->getContainer();
 
     $app->get('/', function (Request $request, Response $response, array $args) use ($container) {
-        $body = $container->get(SensuApiService::class)->getCheckResults();
-
-        // Render index view
-        return $container->get('renderer')->render($response, 'index.phtml', ['body' => $body]);
+        return $container->get('renderer')->render($response, 'index.phtml');
     });
 
     $app->get('/checkResults', CheckResultsController::class . ':getCheckResults');

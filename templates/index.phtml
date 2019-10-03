@@ -187,20 +187,7 @@
     </style>
 </head>
 <body>
-
-    <?php
-
-    foreach ($body as $check) {
-        $dateTime = new DateTime();
-        $dateTime->setTimestamp($check['check']['executed']);
-        //echo "Name: " . $check["check"]["name"] . " Status: " . $check['check']["status"] . " Run at: " . $dateTime->format("d/m/Y H:i:s");
-        //echo "<br />";
-    }
-
-    ?>
-
     <div id="app"></div>
-
     <script src="/assets/js/app.bundle.js"></script>
 </body>
 </html>
