@@ -1,21 +1,27 @@
 <?php
 
 namespace SensuDashboard\Service;
+
 use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use SensuDashboard\Service\SensuConfigService;
 
 class SensuApiService
 {
     private $sensuApiBaseUrl;
 
+    private $sensuConfigService;
+
     /**
      * SensuApiService constructor.
      * @param $sensuApiBaseUrl
+     * @param $sensuConfigService
      */
-    public function __construct($sensuApiBaseUrl)
+    public function __construct($sensuApiBaseUrl, SensuConfigService $sensuConfigService)
     {
         $this->sensuApiBaseUrl = $sensuApiBaseUrl;
+        $this->sensuConfigService = $sensuConfigService;
     }
 
     /**
@@ -24,14 +30,24 @@ class SensuApiService
      */
     public function getCheckResults()
     {
+        $results = $this->getAllCheckResults();
+
+        return $this->filterOldResults($results);
+    }
+
+    /**
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getAllCheckResults()
+    {
         $client = new Client();
 
         $request = new Request('GET', $this->sensuApiBaseUrl . "/results");
         $response = $client->send($request, ['timeout' => 2]);
         $results = json_decode($response->getBody()->getContents(), 1);
-        $filteredResults = $this->filterOldResults($results);
 
-        return $filteredResults;
+        return $results;
     }
 
     /**
@@ -90,5 +106,36 @@ class SensuApiService
         $response = $client->send($request, ['timeout' => 2]);
 
         return $response->getBody()->getContents();
+    }
+
+    public function getSensorsThatHaveNeverRun()
+    {
+        $currentSensors = $this->sensuConfigService->getCurrentConfiguredSensors();
+
+        $allRunResults = $this->getAllCheckResults();
+
+        $sensorsThatHaveNeverRun = [];
+
+        foreach ($currentSensors as $config) {
+            if (isset($config['client']) ||
+                isset($config['handlers']) ||
+                isset($config['relay']) ||
+                isset($config['rabbitmq'])
+                || is_null($config)) {
+                continue;
+            }
+
+            $key = key($config['checks']);
+
+            if (in_array($key, ['services', 'sms_queue'])) {
+                continue;
+            }
+
+            if (!isset($allRunResults[$key])) {
+                $sensorsThatHaveNeverRun[] = $key;
+            }
+        }
+
+        return $sensorsThatHaveNeverRun;
     }
 }

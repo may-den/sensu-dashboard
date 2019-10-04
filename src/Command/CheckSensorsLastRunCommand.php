@@ -2,16 +2,20 @@
 namespace SensuDashboard\Command;
 
 use DateTime;
-use DirectoryIterator;
 use Maknz\Slack\Client;
 use SensuDashboard\Service\SensuApiService;
+use SensuDashboard\Service\SensuConfigService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CheckSensorsLastRunCommand extends Command
 {
-    private $sensuConfigDirectory;
+    /**
+     * @var SensuConfigService
+     */
+    private $sensuConfigService;
+
     /**
      * @var SensuApiService
      */
@@ -20,14 +24,15 @@ class CheckSensorsLastRunCommand extends Command
     private $slackChannel;
 
     /**
-     * CheckSensorsLastRunCommand constructor.
-     * @param $sensuConfigDirectory
+     * @param SensuConfigService $sensuConfigService
      * @param SensuApiService $checkResultService
+     * @param string $slackUrl
+     * @param string $slackChannel
      */
-    public function __construct($sensuConfigDirectory, SensuApiService $checkResultService, $slackUrl, $slackChannel)
+    public function __construct(SensuConfigService $sensuConfigService, SensuApiService $checkResultService, $slackUrl, $slackChannel)
     {
         parent::__construct();
-        $this->sensuConfigDirectory = $sensuConfigDirectory;
+        $this->sensuConfigService = $sensuConfigService;
         $this->checkResultService = $checkResultService;
         $this->slackUrl = $slackUrl;
         $this->slackChannel = $slackChannel;
@@ -36,23 +41,13 @@ class CheckSensorsLastRunCommand extends Command
     protected function configure()
     {
         $this->setName('check-last-runs')
-             ->setDescription('Checks when check sensors were last run compared to how often they should 
+             ->setDescription('Checks when check sensors were last run compared to how often they should
              run');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $directoryIterator = new DirectoryIterator($this->sensuConfigDirectory);
-
-        $sensuConfig = [];
-
-        foreach ($directoryIterator as $file) {
-            if ($file->isDot()) {
-                continue;
-            }
-
-            $sensuConfig[] = json_decode(file_get_contents($file->getPathname()), 1);
-        }
+        $sensuConfig = $this->sensuConfigService->getCurrentConfiguredSensors();
 
         $lastRunResults = $this->checkResultService->getCheckResultsByCheck();
         $lateSensors = [];
