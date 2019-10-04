@@ -3,25 +3,25 @@
 namespace SensuDashboard\Service;
 
 use DateTime;
-use DirectoryIterator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use SensuDashboard\Service\SensuConfigService;
 
 class SensuApiService
 {
     private $sensuApiBaseUrl;
 
-    private $sensuConfigDirectory;
+    private $sensuConfigService;
 
     /**
      * SensuApiService constructor.
      * @param $sensuApiBaseUrl
-     * @param $sensuConfigDirectory
+     * @param $sensuConfigService
      */
-    public function __construct($sensuApiBaseUrl, $sensuConfigDirectory)
+    public function __construct($sensuApiBaseUrl, SensuConfigService $sensuConfigService)
     {
         $this->sensuApiBaseUrl = $sensuApiBaseUrl;
-        $this->sensuConfigDirectory = $sensuConfigDirectory;
+        $this->sensuConfigService = $sensuConfigService;
     }
 
     /**
@@ -100,23 +100,13 @@ class SensuApiService
 
     public function getSensorsThatHaveNeverRun()
     {
-        $directoryIterator = new DirectoryIterator($this->sensuConfigDirectory);
-
-        $sensuConfig = [];
-
-        foreach ($directoryIterator as $file) {
-            if ($file->isDot()) {
-                continue;
-            }
-
-            $sensuConfig[] = json_decode(file_get_contents($file->getPathname()), 1);
-        }
+        $currentSensors = $this->sensuConfigService->getCurrentConfiguredSensors();
 
         $lastRunResults = $this->getCheckResults();
 
         $sensorsThatHaveNeverRun = [];
 
-        foreach ($sensuConfig as $config) {
+        foreach ($currentSensors as $config) {
             if (isset($config['client']) ||
                 isset($config['handlers']) ||
                 isset($config['relay']) ||

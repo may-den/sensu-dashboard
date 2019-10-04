@@ -3,7 +3,6 @@
 use SensuDashboard\Controller\CheckResultsController;
 use SensuDashboard\Controller\MockSensuClientsApiController;
 use SensuDashboard\Controller\MockSensuResultsApiController;
-use SensuDashboard\Service\SensuApiService;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;

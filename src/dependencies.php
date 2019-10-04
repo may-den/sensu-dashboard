@@ -6,7 +6,9 @@ use Monolog\Processor\UidProcessor;
 use SensuDashboard\Controller\CheckResultsController;
 use SensuDashboard\Factory\CheckResultsControllerFactory;
 use SensuDashboard\Factory\CheckResultsServiceFactory;
+use SensuDashboard\Factory\SensuConfigServiceFactory;
 use SensuDashboard\Service\SensuApiService;
+use SensuDashboard\Service\SensuConfigService;
 use Slim\App;
 use Slim\Views\PhpRenderer;
 
@@ -40,6 +42,7 @@ return function (App $app) {
     $container['config'] = $config;
 
 
-    $container[CheckResultsController::class] = new CheckResultsControllerFactory($container);
     $container[SensuApiService::class] = new CheckResultsServiceFactory($container);
+    $container[CheckResultsController::class] = new CheckResultsControllerFactory($container);
+    $container[SensuConfigService::class] = new SensuConfigServiceFactory($container);
 };

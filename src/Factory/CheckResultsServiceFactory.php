@@ -4,14 +4,15 @@ namespace SensuDashboard\Factory;
 
 use Psr\Container\ContainerInterface;
 use SensuDashboard\Service\SensuApiService;
+use SensuDashboard\Service\SensuConfigService;
 
 class CheckResultsServiceFactory
 {
     public function __invoke(ContainerInterface $container)
     {
         $sensuApiBaseUrl = $container->get('config')['sensu-api-base-url'];
-        $sensuConfigDirectory = $container->get('config')['sensu-config-directory'];
+        $sensuConfigService = $container->get(SensuConfigService::class);
 
-        return new SensuApiService($sensuApiBaseUrl, $sensuConfigDirectory);
+        return new SensuApiService($sensuApiBaseUrl, $sensuConfigService);
     }
 }
