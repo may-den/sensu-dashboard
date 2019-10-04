@@ -30,14 +30,24 @@ class SensuApiService
      */
     public function getCheckResults()
     {
+        $results = $this->getAllCheckResults();
+
+        return $this->filterOldResults($results);
+    }
+
+    /**
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getAllCheckResults()
+    {
         $client = new Client();
 
         $request = new Request('GET', $this->sensuApiBaseUrl . "/results");
         $response = $client->send($request, ['timeout' => 2]);
         $results = json_decode($response->getBody()->getContents(), 1);
-        $filteredResults = $this->filterOldResults($results);
 
-        return $filteredResults;
+        return $results;
     }
 
     /**
@@ -102,7 +112,7 @@ class SensuApiService
     {
         $currentSensors = $this->sensuConfigService->getCurrentConfiguredSensors();
 
-        $lastRunResults = $this->getCheckResults();
+        $allRunResults = $this->getAllCheckResults();
 
         $sensorsThatHaveNeverRun = [];
 
@@ -121,7 +131,7 @@ class SensuApiService
                 continue;
             }
 
-            if (!isset($lastRunResults[$key])) {
+            if (!isset($allRunResults[$key])) {
                 $sensorsThatHaveNeverRun[] = $key;
             }
         }
