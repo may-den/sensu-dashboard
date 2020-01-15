@@ -23,7 +23,7 @@ class SensuConfigService
         $sensuConfig = [];
 
         foreach ($directoryIterator as $file) {
-            if ($file->isDot()) {
+            if ($file->isDot() || $fileinfo->getExtension() != 'json') {
                 continue;
             }
 
