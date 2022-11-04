@@ -3,6 +3,7 @@
 namespace SensuDashboard\Service;
 
 use DirectoryIterator;
+use Exception;
 
 class SensuConfigService
 {
@@ -38,6 +39,10 @@ class SensuConfigService
 
                 $sensuConfig[] = json_decode(file_get_contents($file->getPathname()), 1);
             }
+        }
+
+        if (empty($sensuConfig)) {
+            throw new Exception('No Sensor config data found');
         }
 
         return $sensuConfig;

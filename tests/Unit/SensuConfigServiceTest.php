@@ -2,8 +2,10 @@
 
 namespace Tests\Unit;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use SensuDashboard\Service\SensuConfigService;
+use UnexpectedValueException;
 
 class SensuConfigServiceTest extends TestCase
 {
@@ -24,8 +26,7 @@ class SensuConfigServiceTest extends TestCase
 
     public function tearDown(): void
     {
-        unlink(__DIR__ . '/sensor-config/iaptus-uk-test/test-sensor.json');
-        unlink(__DIR__ . '/sensor-config/iaptus-aus-test/test-sensor.json');
+        $this->deleteJsonFiles();
         rmdir(__DIR__ . '/sensor-config/iaptus-uk-test');
         rmdir(__DIR__ . '/sensor-config/iaptus-aus-test');
         rmdir(__DIR__ . '/sensor-config');
@@ -41,5 +42,28 @@ class SensuConfigServiceTest extends TestCase
         ];
 
         $this->assertSame(sort($expected), sort($actual));
+    }
+
+    public function testItThrowsExceptionIfFolderDoesNotExist(): void
+    {
+        $sensuConfigService = new SensuConfigService(__DIR__ . '/sensor-config/made-up-place');
+
+        $this->expectException(UnexpectedValueException::class);
+        $sensuConfigService->getCurrentConfiguredSensors();
+    }
+
+    public function testItThrowsExceptionIfNoJsonFilesInDirectory(): void
+    {
+        $sensuConfigService = new SensuConfigService(__DIR__ . '/sensor-config');
+        $this->deleteJsonFiles();
+
+        $this->expectException(Exception::class);
+        $sensuConfigService->getCurrentConfiguredSensors();
+    }
+
+    private function deleteJsonFiles(): void
+    {
+        unlink(__DIR__ . '/sensor-config/iaptus-uk-test/test-sensor.json');
+        unlink(__DIR__ . '/sensor-config/iaptus-aus-test/test-sensor.json');
     }
 }
