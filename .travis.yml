@@ -2,9 +2,11 @@ language: php
 
 php:
   - 7.3
-env:
-    global:
-        - XDEBUG_MODE=coverage
+
+# install phing globally
+before_install:
+  - phpenv rehash
+  - source ~/.bashrc
 
 before_script:
   - echo 'error_reporting = E_ALL' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
