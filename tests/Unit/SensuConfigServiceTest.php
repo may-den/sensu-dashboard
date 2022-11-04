@@ -40,6 +40,6 @@ class SensuConfigServiceTest extends TestCase
             ['sensor-uk' => 'green'],
         ];
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, $actual, "\$canonicalize = true");
     }
 }
