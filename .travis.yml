@@ -3,18 +3,12 @@ language: php
 php:
   - 7.3
 
-# install phing globally
 before_install:
   - composer global require phing/phing
-  - phpenv rehash
-  - source ~/.bashrc
 
 before_script:
-  - echo 'error_reporting = E_ALL' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
-  - composer install
   - cp config.json.example config.json
-  - phing build
-  - cd -
+  - $(composer global config home)/vendor/bin/phing build
 
 script:
   - php vendor/bin/phpunit .
