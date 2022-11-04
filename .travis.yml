@@ -11,4 +11,4 @@ before_script:
   - $(composer global config home)/vendor/bin/phing build
 
 script:
-  - php vendor/bin/phpunit .
+  - php vendor/bin/phpunit tests
