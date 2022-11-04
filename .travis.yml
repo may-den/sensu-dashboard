@@ -5,6 +5,7 @@ php:
 
 # install phing globally
 before_install:
+  - composer global require phing/phing
   - phpenv rehash
   - source ~/.bashrc
 
