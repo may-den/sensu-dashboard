@@ -63,7 +63,12 @@ class SensuConfigServiceTest extends TestCase
 
     private function deleteJsonFiles(): void
     {
-        unlink(__DIR__ . '/sensor-config/iaptus-uk-test/test-sensor.json');
-        unlink(__DIR__ . '/sensor-config/iaptus-aus-test/test-sensor.json');
+        if (file_exists(__DIR__ . '/sensor-config/iaptus-uk-test/test-sensor.json')) {
+            unlink(__DIR__ . '/sensor-config/iaptus-uk-test/test-sensor.json');
+        }
+
+        if (file_exists(__DIR__ . '/sensor-config/iaptus-aus-test/test-sensor.json')) {
+            unlink(__DIR__ . '/sensor-config/iaptus-aus-test/test-sensor.json');
+        }
     }
 }
