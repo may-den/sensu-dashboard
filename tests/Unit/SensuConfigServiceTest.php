@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Exception;
 use PHPUnit\Framework\TestCase;
+use SensuDashboard\Exception\SensorConfigurationNotSetException;
 use SensuDashboard\Service\SensuConfigService;
 use UnexpectedValueException;
 
@@ -57,7 +57,7 @@ class SensuConfigServiceTest extends TestCase
         $sensuConfigService = new SensuConfigService(__DIR__ . '/sensor-config');
         $this->deleteJsonFiles();
 
-        $this->expectException(Exception::class);
+        $this->expectException(SensorConfigurationNotSetException::class);
         $sensuConfigService->getCurrentConfiguredSensors();
     }
 

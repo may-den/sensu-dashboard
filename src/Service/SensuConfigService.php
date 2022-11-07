@@ -3,7 +3,7 @@
 namespace SensuDashboard\Service;
 
 use DirectoryIterator;
-use Exception;
+use SensuDashboard\Exception\SensorConfigurationNotSetException;
 
 class SensuConfigService
 {
@@ -42,7 +42,7 @@ class SensuConfigService
         }
 
         if (empty($sensuConfig)) {
-            throw new Exception('No Sensor config data found');
+            throw new SensorConfigurationNotSetException('No Sensor config data found');
         }
 
         return $sensuConfig;
