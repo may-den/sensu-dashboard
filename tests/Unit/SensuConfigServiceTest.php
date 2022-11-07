@@ -13,13 +13,13 @@ class SensuConfigServiceTest extends TestCase
     {
         mkDir(__DIR__ . '/sensor-config');
         mkDir(__DIR__ . '/sensor-config/iaptus-uk-test');
-        mkDir(__DIR__ . '/sensor-config/iaptus-aus-test');
+        mkDir(__DIR__ . '/sensor-config/iaptus-ca-test');
 
         $file = fopen(__DIR__ . '/sensor-config/iaptus-uk-test/test-sensor.json', 'w+');
         fwrite($file, json_encode(['sensor-uk' => 'green']));
         fclose($file);
 
-        $file = fopen(__DIR__ . '/sensor-config/iaptus-aus-test/test-sensor.json', 'w+');
+        $file = fopen(__DIR__ . '/sensor-config/iaptus-ca-test/test-sensor.json', 'w+');
         fwrite($file, json_encode(['sensor-ca' => 'red']));
         fclose($file);
     }
@@ -28,7 +28,7 @@ class SensuConfigServiceTest extends TestCase
     {
         $this->deleteJsonFiles();
         rmdir(__DIR__ . '/sensor-config/iaptus-uk-test');
-        rmdir(__DIR__ . '/sensor-config/iaptus-aus-test');
+        rmdir(__DIR__ . '/sensor-config/iaptus-ca-test');
         rmdir(__DIR__ . '/sensor-config');
     }
 
@@ -67,8 +67,8 @@ class SensuConfigServiceTest extends TestCase
             unlink(__DIR__ . '/sensor-config/iaptus-uk-test/test-sensor.json');
         }
 
-        if (file_exists(__DIR__ . '/sensor-config/iaptus-aus-test/test-sensor.json')) {
-            unlink(__DIR__ . '/sensor-config/iaptus-aus-test/test-sensor.json');
+        if (file_exists(__DIR__ . '/sensor-config/iaptus-ca-test/test-sensor.json')) {
+            unlink(__DIR__ . '/sensor-config/iaptus-ca-test/test-sensor.json');
         }
     }
 }
