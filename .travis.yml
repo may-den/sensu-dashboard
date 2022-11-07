@@ -1,0 +1,14 @@
+language: php
+
+php:
+  - 7.4
+
+before_install:
+  - composer global require phing/phing
+
+before_script:
+  - cp config.json.example config.json
+  - $(composer global config home)/vendor/bin/phing build
+
+script:
+  - php vendor/bin/phpunit tests

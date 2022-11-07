@@ -3,25 +3,28 @@
 namespace SensuDashboard\Service;
 
 use DateTime;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use SensuDashboard\Exception\SensorConfigurationNotSetException;
 use SensuDashboard\Service\SensuConfigService;
 
 class SensuApiService
 {
     private $sensuApiBaseUrl;
-
     private $sensuConfigService;
+    private $logger;
 
     /**
      * SensuApiService constructor.
      * @param $sensuApiBaseUrl
      * @param $sensuConfigService
      */
-    public function __construct($sensuApiBaseUrl, SensuConfigService $sensuConfigService)
+    public function __construct($sensuApiBaseUrl, SensuConfigService $sensuConfigService, $logger)
     {
         $this->sensuApiBaseUrl = $sensuApiBaseUrl;
         $this->sensuConfigService = $sensuConfigService;
+        $this->logger = $logger;
     }
 
     /**
@@ -110,7 +113,11 @@ class SensuApiService
 
     public function getSensorsThatHaveNeverRun()
     {
-        $currentSensors = $this->sensuConfigService->getCurrentConfiguredSensors();
+        try {
+            $currentSensors = $this->sensuConfigService->getCurrentConfiguredSensors();
+        } catch (SensorConfigurationNotSetException $e) {
+            $this->logger->error($e->getMessage());
+        }
 
         $allRunResults = $this->getAllCheckResults();
 

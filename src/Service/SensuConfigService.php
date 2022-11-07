@@ -3,15 +3,13 @@
 namespace SensuDashboard\Service;
 
 use DirectoryIterator;
+use SensuDashboard\Exception\SensorConfigurationNotSetException;
 
 class SensuConfigService
 {
     private $sensuConfigDirectory;
 
-    /**
-     * @param $sensuConfigDirectory
-     */
-    public function __construct($sensuConfigDirectory)
+    public function __construct(string $sensuConfigDirectory)
     {
         $this->sensuConfigDirectory = $sensuConfigDirectory;
     }
@@ -21,13 +19,27 @@ class SensuConfigService
         $directoryIterator = new DirectoryIterator($this->sensuConfigDirectory);
 
         $sensuConfig = [];
-
         foreach ($directoryIterator as $file) {
-            if ($file->isDot() || $fileinfo->getExtension() != 'json') {
-                continue;
-            }
+            if ($file->isDir()) {
+                $innerIterator = new DirectoryIterator($file->getPathname());
+                foreach ($innerIterator as $file) {
+                    if ($file->isDot() || $file->getExtension() != 'json') {
+                        continue;
+                    }
 
-            $sensuConfig[] = json_decode(file_get_contents($file->getPathname()), 1);
+                    $sensuConfig[] = json_decode(file_get_contents($file->getPathname()), 1);
+                }
+            } else {
+                if ($file->isDot() || $file->getExtension() != 'json') {
+                    continue;
+                }
+
+                $sensuConfig[] = json_decode(file_get_contents($file->getPathname()), 1);
+            }
+        }
+
+        if (empty($sensuConfig)) {
+            throw new SensorConfigurationNotSetException('No Sensor config data found');
         }
 
         return $sensuConfig;

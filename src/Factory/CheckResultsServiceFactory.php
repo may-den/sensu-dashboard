@@ -13,6 +13,6 @@ class CheckResultsServiceFactory
         $sensuApiBaseUrl = $container->get('config')['sensu-api-base-url'];
         $sensuConfigService = $container->get(SensuConfigService::class);
 
-        return new SensuApiService($sensuApiBaseUrl, $sensuConfigService);
+        return new SensuApiService($sensuApiBaseUrl, $sensuConfigService, $container['logger']);
     }
 }

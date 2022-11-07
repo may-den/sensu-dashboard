@@ -1,5 +1,5 @@
 {
-    "base-url": "http://sensu-dashboard.test",
+    "base-url": "http://sensu-dashboard.internal",
     "sensu-config-directory": "/etc/sensu/conf.d",
     "sensu-api-base-url": "http://127.0.0.1:4567",
     "slack-channel": "#iaptus-sensors",

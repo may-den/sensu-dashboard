@@ -3,6 +3,7 @@ namespace SensuDashboard\Command;
 
 use DateTime;
 use Maknz\Slack\Client;
+use SensuDashboard\Exception\SensorConfigurationNotSetException;
 use SensuDashboard\Service\SensuApiService;
 use SensuDashboard\Service\SensuConfigService;
 use Symfony\Component\Console\Command\Command;
@@ -11,9 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CheckSensorsLastRunCommand extends Command
 {
-    /**
-     * @var SensuConfigService
-     */
     private $sensuConfigService;
 
     /**
@@ -47,7 +45,11 @@ class CheckSensorsLastRunCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $sensuConfig = $this->sensuConfigService->getCurrentConfiguredSensors();
+        try {
+            $sensuConfig = $this->sensuConfigService->getCurrentConfiguredSensors();
+        } catch (SensorConfigurationNotSetException $e) {
+            $output->write($e->getMessage());
+        }
 
         $lastRunResults = $this->checkResultService->getCheckResultsByCheck();
         $lateSensors = [];
