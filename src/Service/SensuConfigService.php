@@ -9,10 +9,7 @@ class SensuConfigService
 {
     private $sensuConfigDirectory;
 
-    /**
-     * @param $sensuConfigDirectory
-     */
-    public function __construct($sensuConfigDirectory)
+    public function __construct(string $sensuConfigDirectory)
     {
         $this->sensuConfigDirectory = $sensuConfigDirectory;
     }
