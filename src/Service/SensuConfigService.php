@@ -3,6 +3,7 @@
 namespace SensuDashboard\Service;
 
 use DirectoryIterator;
+use RecursiveDirectoryIterator;
 use SensuDashboard\Exception\SensorConfigurationNotSetException;
 
 class SensuConfigService
@@ -16,12 +17,15 @@ class SensuConfigService
 
     public function getCurrentConfiguredSensors()
     {
-        $directoryIterator = new DirectoryIterator($this->sensuConfigDirectory);
+        $directoryIterator = new RecursiveDirectoryIterator(
+            $this->sensuConfigDirectory,
+            RecursiveDirectoryIterator::SKIP_DOTS
+        );
 
         $sensuConfig = [];
-        foreach ($directoryIterator as $file) {
-            if ($file->isDir()) {
-                $innerIterator = new DirectoryIterator($file->getPathname());
+        foreach ($directoryIterator as $iteration) {
+            if ($iteration->isDir()) {
+                $innerIterator = new DirectoryIterator($iteration->getPathname());
                 foreach ($innerIterator as $file) {
                     if ($file->isDot() || $file->getExtension() != 'json') {
                         continue;
@@ -30,11 +34,11 @@ class SensuConfigService
                     $sensuConfig[] = json_decode(file_get_contents($file->getPathname()), 1);
                 }
             } else {
-                if ($file->isDot() || $file->getExtension() != 'json') {
+                if ($iteration->getExtension() != 'json') {
                     continue;
                 }
 
-                $sensuConfig[] = json_decode(file_get_contents($file->getPathname()), 1);
+                $sensuConfig[] = json_decode(file_get_contents($iteration->getPathname()), 1);
             }
         }
 
