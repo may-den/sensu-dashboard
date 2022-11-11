@@ -63,7 +63,7 @@ class SensuConfigServiceTest extends TestCase
 
     public function testItOnlyLoadsJsonFilesInCorrectDirectory(): void
     {
-        $file = fopen(__DIR__ . '/not-useful-config.json', 'w+');
+        $file = fopen('not-sensor-config.json', 'w+');
         fwrite($file, json_encode(['Don\'t find me' => 'please']));
         fclose($file);
 
@@ -74,7 +74,7 @@ class SensuConfigServiceTest extends TestCase
             ['sensor-uk' => 'green'],
         ];
 
-        unlink(__DIR__ . '/not-useful-config.json');
+        unlink('not-sensor-config.json');
         $this->assertSame(sort($expected), sort($actual));
     }
 
