@@ -61,6 +61,23 @@ class SensuConfigServiceTest extends TestCase
         $sensuConfigService->getCurrentConfiguredSensors();
     }
 
+    public function testItOnlyLoadsJsonFilesInCorrectDirectory(): void
+    {
+        $file = fopen('not-sensor-config.json', 'w+');
+        fwrite($file, json_encode(['Don\'t find me' => 'please']));
+        fclose($file);
+
+        $sensuConfigService = new SensuConfigService(__DIR__ . '/sensor-config');
+        $actual = $sensuConfigService->getCurrentConfiguredSensors();
+        $expected = [
+            ['sensor-ca' => 'red'],
+            ['sensor-uk' => 'green'],
+        ];
+
+        unlink('not-sensor-config.json');
+        $this->assertSame(sort($expected), sort($actual));
+    }
+
     private function deleteJsonFiles(): void
     {
         if (file_exists(__DIR__ . '/sensor-config/iaptus-uk-test/test-sensor.json')) {
