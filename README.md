@@ -9,7 +9,7 @@ composer install
 
 ```
 cd js/
-npm install
+yarn install
 ```
 
 ```
@@ -21,9 +21,9 @@ cp config.json.example config.json
 phing build
 ```
 
-### Build J
-Runs under Phing build
+### Build JS
+Runs under phing build
 ```
 cd js/
-npm run build
+yarn run build
 ```
