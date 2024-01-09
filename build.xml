@@ -12,7 +12,7 @@
         </if>
 
         <exec command="composer install" />
-        <exec command="yarn build" dir="js/" />
+        <exec command="npm build" dir="js/" />
     </target>
 
 </project>

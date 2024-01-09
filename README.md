@@ -9,7 +9,7 @@ composer install
 
 ```
 cd js/
-yarn install
+npm install
 ```
 
 ```
@@ -25,5 +25,5 @@ phing build
 Runs under phing build
 ```
 cd js/
-yarn run build
+npm run build
 ```
